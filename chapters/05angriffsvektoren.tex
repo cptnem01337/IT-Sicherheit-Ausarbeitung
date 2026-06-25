@@ -1,0 +1,56 @@
+\section{Angriffsvektoren}
+Der bisherige Vergleich konzentrierte sich primär auf die Disziplin der Code-Schwachstellenanalyse, in der sich der Abstand zwischen Mythos und öffentlichen Modellen als gering erwies. Diese ist jedoch nur ein Teilbereich des offensiven KI-Einsatzes. Über die reine Quellcode-Analyse hinaus existieren weitere Angriffsvektoren, in denen generative Modelle bestehende Angriffsmuster nicht nur beschleunigen, sondern qualitativ verändern. Die folgenden Abschnitte behandeln die drei relevantesten: Phishing \& Social Engineering, Code-Schwachstellenanalyse \& Exploit-Generierung sowie physische Schwachstellenanalyse \& Exploit-Generierung.
+
+\subsection{Phishing \& Social Engineering}
+Phishing und Social Engineering zählen seit Jahren zu den erfolgreichsten Einstiegsvektoren in Unternehmensnetzwerke. Generative KI verändert beide Felder grundlegend, weil sie bisherige Erkennungsmerkmale -- fehlerhafte Grammatik, unpersönliche Ansprache, holprige Übersetzungen -- weitgehend eliminiert und gleichzeitig die Skalierbarkeit hochgradig personalisierter Angriffe ermöglicht~\cite{hazell_spear_2023,_social_2025}.
+\newline
+\newline
+\textbf{Phishing und Spear-Phishing}
+\newline
+Klassische Massen-Phishing-Kampagnen sind in der Vergangenheit häufig an der Sprachqualität gescheitert. Mit Large Language Models lassen sich Mails grammatisch einwandfrei und stilistisch glaubwürdig in nahezu jeder Sprache erzeugen, ohne dass der Angreifer diese selbst beherrschen muss. Studien zeigen, dass solche NLM-generierten Mails eine hohe Erfolgsquote aufweisen und für klassische Spam-Filter schwer zu detektieren sind~\cite{karanjai_targeted_2023}. In Kombination mit etablierten Phishing-Frameworks wie GoPhish oder King Phisher lassen sich KI-generierte Templates automatisiert an tausende Empfänger ausspielen. Hinzu kommen spezialisierte, unzensierte Modelle wie WormGPT und FraudGPT, die explizit für die Erstellung betrügerischer Inhalte beworben und in einschlägigen Foren gehandelt werden.
+\newline % TODO: Quelle für WormGPT/FraudGPT ergänzen
+
+Besonders kritisch ist die Verschiebung von breit gestreutem Phishing zu KI-skaliertem Spear-Phishing. Open-Source-Intelligence-Werkzeuge wie theHarvester, Maltego und SpiderFoot aggregieren öffentlich verfügbare Daten über Zielpersonen aus sozialen Netzwerken, Domain-Registries und Datenleaks. LLMs konsumieren diese Profile und erzeugen daraus individuell zugeschnittene Nachrichten. Hazell demonstriert dies an einer Kampagne gegen über 600 britische Parlamentsabgeordnete, bei der jede personalisierte Mail nur einen Bruchteil eines Cents kostet und Sicherheitsmechanismen heutiger LLMs durch einfaches Prompt-Engineering umgangen werden können~\cite{hazell_spear_2023}. Eine vergleichende Studie an rund 9.000 Beschäftigten einer großen Universität zeigt zudem, dass auch laterales Phishing aus kompromittierten internen Konten durch LLMs ebenso wirksam ist wie von Kommunikationsprofis verfasste Mails -- bei zeitkritischen Anlässen übertrifft die LLM-Variante die menschliche sogar~\cite{bethany_lateral_2025}.
+\newline
+
+Über die reine Textgenerierung hinaus werden gefälschte Login-Seiten zunehmend mit überzeugenden Begleit-Mails kombiniert. Adversary-in-the-Middle-Frameworks wie Evilginx sowie skript-basierte Werkzeuge wie Zphisher oder das Social Engineering Toolkit (SET) liefern die technische Infrastruktur zum Abgreifen von Session-Cookies und Zwei-Faktor-Token. Die LLM-gestützte Komponente liefert dazu kontextuell passende Tarnnachrichten, etwa vorgetäuschte IT-Tickets oder HR-Korrespondenz, die zur Eingabe der Zugangsdaten verleiten.
+\newline
+\newline
+\textbf{Social Engineering}
+\newline
+Im klassischen Social-Engineering-Bereich verschärft sich die Lage durch generative Audio- und Videomodelle. Voice-Cloning-Dienste wie ElevenLabs ermöglichen die Synthese überzeugender Sprachnachrichten aus wenigen Sekunden Audiomaterial, das häufig aus öffentlich zugänglichen Videos, Podcasts oder Voicemails gewonnen wird. Praktische Untersuchungen zu KI-gestütztem Vishing demonstrieren die Machbarkeit solcher Angriffe unter realistischen Bedingungen~\cite{toapanta_aidriven_2024}. Auch Echtzeit-Videoanruf-Manipulationen mittels Deepfake-Tools wie DeepFaceLive werden in CEO-Fraud-Szenarien eingesetzt; Jampani beschreibt diese Entwicklung von einfachen Imitationen hin zu nahezu photorealistischen Repliken realer Stimmen und Gesichter und verweist insbesondere auf die hohen finanziellen Schäden in den Sektoren Finanzwesen und Gesundheit~\cite{_social_2025}. % TODO: dokumentierte Einzelfälle
+
+Eine weitere Angriffsvektor ist die Chat-Impersonation. LLMs können den Schreibstil einer Person aus wenigen Beispielnachrichten replizieren und in laufenden Konversationen über Messenger-Plattformen oder Kollaborationstools die Identität eines Kollegen oder Vorgesetzten übernehmen. % TODO: Quelle f\"ur Chat-Impersonation / Stilklonung ergänzen
+Da viele Authentifizierungsprozesse weiterhin auf vertrauten Kommunikationskanälen und stilistischer Wiedererkennung beruhen, verlieren diese Heuristiken ihre Schutzwirkung. Damit verschwimmt die Grenze zwischen technischem Angriff und sozialer Manipulation zunehmend, und etablierte Verifikationsmechanismen wie Rückruf oder Out-of-Band-Bestätigung gewinnen an Bedeutung.
+
+\subsection{Code Schwachstellenanalyse \& Exploit generierung}
+Wo Social Engineering den menschlichen Faktor als Einstiegspunkt ausnutzt, richtet sich der zweite Angriffsvektor unmittelbar gegen das technische Substrat: den Quellcode und die Binärdateien hinter digitalen Systemen. Generative KI-Modelle ermöglichen es Angreifern, Codebasen in einem Umfang und einer Geschwindigkeit zu durchsuchen, die manueller Analyse bislang unzugänglich waren -- ohne dass tiefes Expertenwissen in statischer Analyse oder Reverse Engineering vorausgesetzt werden muss.
+\newline
+\newline
+\textbf{Tools}
+\newline
+Für die KI-gestützte Schwachstellenanalyse steht Angreifern ein zweigliedriges Werkzeugspektrum zur Verfügung. Spezialisierte, ungefilterte Modelle wie WormGPT, FraudGPT und GhostGPT werden explizit ohne Sicherheitsschranken betrieben und sind auf offensive Anwendungsfälle ausgelegt. Als Alternative bieten selbst-gehostete Open-Source-Modelle wie Qwen, betrieben über Frameworks wie Ollama, vollständige Kontrolle über jede Sicherheitsschicht -- und damit die Möglichkeit, diese vollständig zu entfernen.
+\newline
+
+Öffentlich verfügbare Frontier-Modelle wie Claude, GPT oder Gemini lassen sich durch Jailbreak-Techniken für offensive Zwecke nutzbar machen. DrAttack demonstriert exemplarisch, wie Prompt-Dekomposition und -Rekonstruktion die Sicherheitsfilter dieser Modelle systematisch aushebeln: Schädliche Anfragen werden in harmlos wirkende Teilprompts zerlegt, getrennt an das Modell übermittelt und anschließend zur ursprünglichen Exploit-Anfrage zusammengeführt~\cite{li_drattack_2024}. Diese Technik ist paradigmatisch für eine breite Klasse von Jailbreak-Methoden, die unter dem Begriff DAN (Do Anything Now) zusammengefasst werden und die inhärenten Sicherheitsbeschränkungen öffentlicher Modelle durch strukturelle Prompt-Manipulation umgehen.
+\newline
+\newline
+\textbf{Anwendungsfälle}
+\newline
+Das Einsatzspektrum reicht von der Analyse von Web-Frontends bis zum Reverse Engineering nativer Binärdateien. Im Web-Kontext lassen sich LLMs einsetzen, um JavaScript-Code auf clientseitige Schwachstellen -- unsichere DOM-Manipulationen, unsanitisierte Eingaben oder exponierte API-Schlüssel -- zu untersuchen und darauf aufbauend gezielt manipulierten Code zu erzeugen, der diese Lücken ausnutzt.
+\newline
+
+Besonders wirkungsvoll für die strukturierte Schwachstellensuche in großen Codebasen ist der IRIS-Ansatz~\cite{li_iris_2024}. IRIS kombiniert LLM-gestützte semantische Analyse mit klassischer statischer Programmanalyse, um sicherheitsrelevante Schwachstellen in umfangreichen Open-Source-Projekten wie dem Linux-Kernel oder Firefox zu identifizieren. Das Sprachmodell kompensiert dabei die strukturellen Schwächen regelbasierter Analyzer -- fehlende Kontextsensitivität und hohe Falsch-Positiv-Raten -- indem es semantische Zusammenhänge über Funktionsgrenzen hinweg versteht. Aus Angreiferperspektive lässt sich derselbe Ansatz offensiv wenden: Wer identifizierte Schwachstellen nicht meldet, sondern zu funktionsfähigen Exploits weiterentwickelt, gewinnt einen erheblichen Informationsvorsprung gegenüber den Maintainern betroffener Projekte.
+\newline
+
+Im Bereich des Reverse Engineering ermöglicht KI schließlich die Analyse von Binärdateien ohne vorliegenden Quellcode. LLMs können dekompilierten Code aus Werkzeugen wie Ghidra oder IDA Pro semantisch interpretieren und auf Speicherfehler, Use-after-free-Muster oder Integer-Overflows hinweisen -- ohne dass der Angreifer die Rohdekompilierung manuell auswerten muss. Die Kombination aus automatisierter Dekompilierung und KI-gestützter Interpretation senkt die Einstiegshürde für die Analyse proprietärer Software erheblich und macht bislang spezialisierten Fachkräften vorbehaltene Angriffsflächen einem breiteren Täterkreis zugänglich.
+
+\subsection{Physische Schwachstellenanalyse \& Exploit generierung}
+
+\section{OWASP-Jucieshop Code-analyse \label{cha:demo}} 
+
+\section{Fazit}
+Durch den einsatz von KI Hilfsmittelen von Angreifern ist es leichter Schwachstellen zu finden und diese auszunutzen. Gerade im Bereich Phishing und Socialengineering macht der gebrauch einer LLM vieles einfacher und schneller. Um eine gute qualität zu erhalten ist kein Top Modell erfoderlich, wie z.B. bei der Schwachstellenanalyse. Da Software immer sicherer wird und die meisten Angrife durch Phishing oder Socialengineering gestartet werden, senkt ein LLM diese Hürde noch weiter. Trotzdem ändert ein LLM nicht unbedingt den Ablauf sondern vereinfach nur Schritte, wie das übersetzen. Die Gefahr steigt für Privat Personen mehr and als für Firmen. Da im Privatenbereich nicht so viele Schutzmechanismen existieren wie im Enterprisebereich.
+
+Die interessanteren Angriffsvektoren sind die Schwachstellenanalyse von . 
+Unter betrachtung der Ergebnisse aus Kapitel \ref{cha:mythosvsoffentlich} und dem eigenem Versuch im Kapitel \ref{cha:demo}. Daraus kann abgeleitet werden das die Ergebnisse von Mythos eine bessere Qualität haben. Die Schwachstellen könnnen auch mit öffentlich zugänglichen Modellen gefunden und ausgenutzt werden, die Qualität und konsetenz ist nicht so sicher wie bei Mythos.

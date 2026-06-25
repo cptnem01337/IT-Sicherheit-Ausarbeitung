@@ -1,10 +1,5 @@
 \documentclass[conference]{IEEEtran}
 
-
-
-
-
-
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
@@ -48,171 +43,17 @@
 Diese Ausarbeitung zeigt den Stand der Technik von K.I. im Cyber Sicherheitsbereich für Angreifer. Dazu wird auf die drei Angriffsvektoren: Phishing \& Socialengineering, Code Schwachstellenanalyse \& Exploit generierung, Physische Schwachstellenanalyse \& Exploit generierung eingegnagen. Im Vergleich Mythos vs öffentliche Modelle wird klar das es kein exklusiv Werkzeug ist.
 \end{abstract}
 
-\include{chapters/chapter1}
+% \input{chapters/chapter1}
 
 \IEEEpeerreviewmaketitle
 
-
-
-\section{Einführung}
-Im April 2026 wurde das LLM-Modell \textit{Claude Mythos} von Anthropic angekündigt. Es soll fortgeschrittene Fähigkeiten im Cyberbereich aufweisen. 
-
-
-
-
-\section{Claude Mythos}
-\label{sec:claude-mythos}
-
-
-\section{Öffentliche Modelle vs Mythos \label{cha:mythosvsoffentlich}} 
-Eine zentrale Frage für die Einordnung der Cyber-Risiken durch Claude Mythos ist, wie groß der tatsächliche Leistungsabstand zu öffentlich verfügbaren Modellen ist. Das britische AI Security Institute (AISI) hat hierzu eine vergleichende Evaluierung auf Basis von Capture-the-Flag-Aufgaben (CTFs) durchgeführt, die unterschiedliche Schwierigkeitsstufen offensiver Cyber-Aufgaben abdecken~\cite{aisi_claude_mythos_2026}.
-
-Abbildung~\ref{fig:ctf_nonexpert} zeigt die Erfolgsquoten auf CTFs im Niveau \emph{non-expert} und \emph{apprentice} seit November 2022. Während frühe Modelle nahezu keine Aufgaben lösten, erreichen aktuelle öffentliche Frontier-Modelle ein vergleichbares Niveau wie Mythos. Auf diesem Schwierigkeitsbereich ist der Vorsprung von Mythos im einstelligen Prozentpunktbereich; in einzelnen Konstellationen liegen öffentliche Modelle sogar gleichauf oder leicht darüber.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\columnwidth]{ctf_nonexpert.png}
-\caption{Performance auf \emph{non-expert} und \emph{apprentice} CTF-Aufgaben für Modelle seit November 2022. Quelle: AISI~\cite{aisi_claude_mythos_2026}.}
-\label{fig:ctf_nonexpert}
-\end{figure}
-
-Auf den höheren Schwierigkeitsstufen \emph{practitioner} und \emph{expert} (Abbildung~\ref{fig:ctf_expert}) wird der Abstand sichtbarer, bleibt aber moderat: Mythos löst hier rund 73\,\% der Aufgaben, während die stärksten öffentlichen Modelle nur etwa 5\,Prozentpunkte darunter liegen und in einzelnen Kategorien ebenfalls auf gleichem Niveau abschneiden~\cite{aisi_claude_mythos_2026}.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\columnwidth]{ctf_expert.png}
-\caption{Performance auf \emph{practitioner} und \emph{expert} CTF-Aufgaben für Modelle seit August 2025. Quelle: AISI~\cite{aisi_claude_mythos_2026}.}
-\label{fig:ctf_expert}
-\end{figure}
-
-Daraus ergibt sich eine Beobachtung: Mythos definiert zwar den aktuellen Stand der Technik im Bereich offensiver KI-Fähigkeiten, der Abstand zur breit verfügbaren Modellbasis ist jedoch klein. Schon ein Leistungsdelta von rund 5\,Prozentpunkten auf Expert-Level-CTFs bedeutet, dass die in den folgenden Abschnitten diskutierten Angriffsvektoren nicht auf Mythos beschränkt sind, sondern in abgeschwächter Form bereits mit öffentlich zugänglichen Modellen realisiert werden können.
-
-Diese Einschätzung wird durch eine unabhängige Reproduktionsstudie der Vidoc Security Labs gestützt~\cite{vidoc_mythos_reproduction_2026}. Vidoc hat die von Anthropic für Mythos berichteten Code-Schwachstellenfunde mit den öffentlich verfügbaren Modellen Claude Opus 4.6 und GPT-5.4 nachzustellen versucht und dabei in mehreren Kategorien identische Ergebnisse erzielt. Tabelle~\ref{tab:vidoc_repro} fasst die Befunde zusammen.
-
-\begin{table}[!htbp]
-\renewcommand{\arraystretch}{1.2}
-\caption{Reproduktion der Mythos-Schwachstellenfunde mit öffentlichen Modellen. Quelle: Vidoc Security~\cite{vidoc_mythos_reproduction_2026}.}
-\label{tab:vidoc_repro}
-\centering
-\footnotesize
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Ziel} & \textbf{Claude Opus 4.6} & \textbf{GPT-5.4} \\
-\hline
-FreeBSD (CVE-2026-4747) & exact (3/3) & exact (3/3) \\
-\hline
-OpenBSD (27-J.-Bug) & exact (3/3) & keine (0/3) \\
-\hline
-Botan (CVE-2026-34580/82) & exact (3/3) & exact (3/3) \\
-\hline
-FFmpeg (\texttt{h264\_slice.c}) & partial (3/3) & partial (3/3) \\
-\hline
-wolfSSL (CVE-2026-5194) & partial (3/3) & partial (3/3) \\
-\hline
-\end{tabular}
-\end{table}
-
-Vidoc berichtet, dass die Kosten für einen vollständigen Scan einer einzelnen Datei mit öffentlichen Modellen unter 30\,\$ blieben~\cite{vidoc_mythos_reproduction_2026}. Vor diesem Hintergrund ist auch die Preisstruktur der drei verglichenen Modelle aufschlussreich (Tabelle~\ref{tab:pricing}). Mythos ist je 1\,Mio.~Tokens deutlich teurer als die öffentlichen Alternativen.
-
-\begin{table}[!htbp]
-\renewcommand{\arraystretch}{1.2}
-\caption{API-Preise je 1\,Mio.~Tokens (Stand: Juni 2026).}
-\label{tab:pricing}
-\centering
-\footnotesize
-\begin{tabular}{|l|r|r|}
-\hline
-\textbf{Modell} & \textbf{Input / 1M} & \textbf{Output / 1M} \\
-\hline
-GPT-5.4 & \$2{,}50 & \$15{,}00 \\
-\hline
-Claude Opus 4.6 & \$5{,}00 & \$25{,}00 \\
-\hline
-Claude Mythos & \$25{,}00 & \$125{,}00 \\
-\hline
-\end{tabular}
-% TODO: Quellen f\"ur Preise ergänzen (Anthropic-Preisseite, OpenAI-Preisseite)
-\end{table}
-
-Aus der Kombination der CTF-Benchmarks, der Vidoc-Reproduktion und der Preisstruktur ergibt sich das Fazit des Vergleichs:
-\begin{itemize}
-  \item Öffentliche Modelle erzielen vergleichbare Schwachstellenfunde wie Mythos zu Kosten unter 30\,\$ pro Datei~\cite{vidoc_mythos_reproduction_2026}.
-  \item Mythos ist in einzelnen Disziplinen weiterhin überlegen, stellt aber kein exklusives Werkzeug mehr dar, sondern markiert lediglich die obere Kante eines breit zugänglichen Spektrums.
-  \item Der verbleibende Vorteil von Mythos liegt weniger im reinen Modell, sondern im umgebenden Tooling -- Agenten-Schleifen, Code-Ausführung und integrierten Recherche-Werkzeugen.
-\end{itemize}
-
-\section{Angriffsvektoren}
-Der bisherige Vergleich konzentrierte sich primär auf die Disziplin der Code-Schwachstellenanalyse, in der sich der Abstand zwischen Mythos und öffentlichen Modellen als gering erwies. Diese ist jedoch nur ein Teilbereich des offensiven KI-Einsatzes. Über die reine Quellcode-Analyse hinaus existieren weitere Angriffsvektoren, in denen generative Modelle bestehende Angriffsmuster nicht nur beschleunigen, sondern qualitativ verändern. Die folgenden Abschnitte behandeln die drei relevantesten: Phishing \& Social Engineering, Code-Schwachstellenanalyse \& Exploit-Generierung sowie physische Schwachstellenanalyse \& Exploit-Generierung.
-
-\subsection{Phishing \& Social Engineering}
-Phishing und Social Engineering zählen seit Jahren zu den erfolgreichsten Einstiegsvektoren in Unternehmensnetzwerke. Generative KI verändert beide Felder grundlegend, weil sie bisherige Erkennungsmerkmale -- fehlerhafte Grammatik, unpersönliche Ansprache, holprige Übersetzungen -- weitgehend eliminiert und gleichzeitig die Skalierbarkeit hochgradig personalisierter Angriffe ermöglicht~\cite{hazell_spear_2023,_social_2025}.
-\newline
-\newline
-\textbf{Phishing und Spear-Phishing}
-\newline
-Klassische Massen-Phishing-Kampagnen sind in der Vergangenheit häufig an der Sprachqualität gescheitert. Mit Large Language Models lassen sich Mails grammatisch einwandfrei und stilistisch glaubwürdig in nahezu jeder Sprache erzeugen, ohne dass der Angreifer diese selbst beherrschen muss. Studien zeigen, dass solche NLM-generierten Mails eine hohe Erfolgsquote aufweisen und für klassische Spam-Filter schwer zu detektieren sind~\cite{karanjai_targeted_2023}. In Kombination mit etablierten Phishing-Frameworks wie GoPhish oder King Phisher lassen sich KI-generierte Templates automatisiert an tausende Empfänger ausspielen. Hinzu kommen spezialisierte, unzensierte Modelle wie WormGPT und FraudGPT, die explizit für die Erstellung betrügerischer Inhalte beworben und in einschlägigen Foren gehandelt werden.
-\newline % TODO: Quelle für WormGPT/FraudGPT ergänzen
-
-Besonders kritisch ist die Verschiebung von breit gestreutem Phishing zu KI-skaliertem Spear-Phishing. Open-Source-Intelligence-Werkzeuge wie theHarvester, Maltego und SpiderFoot aggregieren öffentlich verfügbare Daten über Zielpersonen aus sozialen Netzwerken, Domain-Registries und Datenleaks. LLMs konsumieren diese Profile und erzeugen daraus individuell zugeschnittene Nachrichten. Hazell demonstriert dies an einer Kampagne gegen über 600 britische Parlamentsabgeordnete, bei der jede personalisierte Mail nur einen Bruchteil eines Cents kostet und Sicherheitsmechanismen heutiger LLMs durch einfaches Prompt-Engineering umgangen werden können~\cite{hazell_spear_2023}. Eine vergleichende Studie an rund 9.000 Beschäftigten einer großen Universität zeigt zudem, dass auch laterales Phishing aus kompromittierten internen Konten durch LLMs ebenso wirksam ist wie von Kommunikationsprofis verfasste Mails -- bei zeitkritischen Anlässen übertrifft die LLM-Variante die menschliche sogar~\cite{bethany_lateral_2025}.
-\newline
-
-Über die reine Textgenerierung hinaus werden gefälschte Login-Seiten zunehmend mit überzeugenden Begleit-Mails kombiniert. Adversary-in-the-Middle-Frameworks wie Evilginx sowie skript-basierte Werkzeuge wie Zphisher oder das Social Engineering Toolkit (SET) liefern die technische Infrastruktur zum Abgreifen von Session-Cookies und Zwei-Faktor-Token. Die LLM-gestützte Komponente liefert dazu kontextuell passende Tarnnachrichten, etwa vorgetäuschte IT-Tickets oder HR-Korrespondenz, die zur Eingabe der Zugangsdaten verleiten.
-\newline
-\newline
-\textbf{Social Engineering}
-\newline
-Im klassischen Social-Engineering-Bereich verschärft sich die Lage durch generative Audio- und Videomodelle. Voice-Cloning-Dienste wie ElevenLabs ermöglichen die Synthese überzeugender Sprachnachrichten aus wenigen Sekunden Audiomaterial, das häufig aus öffentlich zugänglichen Videos, Podcasts oder Voicemails gewonnen wird. Praktische Untersuchungen zu KI-gestütztem Vishing demonstrieren die Machbarkeit solcher Angriffe unter realistischen Bedingungen~\cite{toapanta_aidriven_2024}. Auch Echtzeit-Videoanruf-Manipulationen mittels Deepfake-Tools wie DeepFaceLive werden in CEO-Fraud-Szenarien eingesetzt; Jampani beschreibt diese Entwicklung von einfachen Imitationen hin zu nahezu photorealistischen Repliken realer Stimmen und Gesichter und verweist insbesondere auf die hohen finanziellen Schäden in den Sektoren Finanzwesen und Gesundheit~\cite{_social_2025}. % TODO: dokumentierte Einzelfälle
-
-Eine weitere Angriffsvektor ist die Chat-Impersonation. LLMs können den Schreibstil einer Person aus wenigen Beispielnachrichten replizieren und in laufenden Konversationen über Messenger-Plattformen oder Kollaborationstools die Identität eines Kollegen oder Vorgesetzten übernehmen. % TODO: Quelle f\"ur Chat-Impersonation / Stilklonung ergänzen
-Da viele Authentifizierungsprozesse weiterhin auf vertrauten Kommunikationskanälen und stilistischer Wiedererkennung beruhen, verlieren diese Heuristiken ihre Schutzwirkung. Damit verschwimmt die Grenze zwischen technischem Angriff und sozialer Manipulation zunehmend, und etablierte Verifikationsmechanismen wie Rückruf oder Out-of-Band-Bestätigung gewinnen an Bedeutung.
-
-\subsection{Code Schwachstellenanalyse \& Exploit generierung}
-Wo Social Engineering den menschlichen Faktor als Einstiegspunkt ausnutzt, richtet sich der zweite Angriffsvektor unmittelbar gegen das technische Substrat: den Quellcode und die Binärdateien hinter digitalen Systemen. Generative KI-Modelle ermöglichen es Angreifern, Codebasen in einem Umfang und einer Geschwindigkeit zu durchsuchen, die manueller Analyse bislang unzugänglich waren -- ohne dass tiefes Expertenwissen in statischer Analyse oder Reverse Engineering vorausgesetzt werden muss.
-\newline
-\newline
-\textbf{Tools}
-\newline
-Für die KI-gestützte Schwachstellenanalyse steht Angreifern ein zweigliedriges Werkzeugspektrum zur Verfügung. Spezialisierte, ungefilterte Modelle wie WormGPT, FraudGPT und GhostGPT werden explizit ohne Sicherheitsschranken betrieben und sind auf offensive Anwendungsfälle ausgelegt. Als Alternative bieten selbst-gehostete Open-Source-Modelle wie Qwen, betrieben über Frameworks wie Ollama, vollständige Kontrolle über jede Sicherheitsschicht -- und damit die Möglichkeit, diese vollständig zu entfernen.
-\newline
-
-Öffentlich verfügbare Frontier-Modelle wie Claude, GPT oder Gemini lassen sich durch Jailbreak-Techniken für offensive Zwecke nutzbar machen. DrAttack demonstriert exemplarisch, wie Prompt-Dekomposition und -Rekonstruktion die Sicherheitsfilter dieser Modelle systematisch aushebeln: Schädliche Anfragen werden in harmlos wirkende Teilprompts zerlegt, getrennt an das Modell übermittelt und anschließend zur ursprünglichen Exploit-Anfrage zusammengeführt~\cite{li_drattack_2024}. Diese Technik ist paradigmatisch für eine breite Klasse von Jailbreak-Methoden, die unter dem Begriff DAN (Do Anything Now) zusammengefasst werden und die inhärenten Sicherheitsbeschränkungen öffentlicher Modelle durch strukturelle Prompt-Manipulation umgehen.
-\newline
-\newline
-\textbf{Anwendungsfälle}
-\newline
-Das Einsatzspektrum reicht von der Analyse von Web-Frontends bis zum Reverse Engineering nativer Binärdateien. Im Web-Kontext lassen sich LLMs einsetzen, um JavaScript-Code auf clientseitige Schwachstellen -- unsichere DOM-Manipulationen, unsanitisierte Eingaben oder exponierte API-Schlüssel -- zu untersuchen und darauf aufbauend gezielt manipulierten Code zu erzeugen, der diese Lücken ausnutzt.
-\newline
-
-Besonders wirkungsvoll für die strukturierte Schwachstellensuche in großen Codebasen ist der IRIS-Ansatz~\cite{li_iris_2024}. IRIS kombiniert LLM-gestützte semantische Analyse mit klassischer statischer Programmanalyse, um sicherheitsrelevante Schwachstellen in umfangreichen Open-Source-Projekten wie dem Linux-Kernel oder Firefox zu identifizieren. Das Sprachmodell kompensiert dabei die strukturellen Schwächen regelbasierter Analyzer -- fehlende Kontextsensitivität und hohe Falsch-Positiv-Raten -- indem es semantische Zusammenhänge über Funktionsgrenzen hinweg versteht. Aus Angreiferperspektive lässt sich derselbe Ansatz offensiv wenden: Wer identifizierte Schwachstellen nicht meldet, sondern zu funktionsfähigen Exploits weiterentwickelt, gewinnt einen erheblichen Informationsvorsprung gegenüber den Maintainern betroffener Projekte.
-\newline
-
-Im Bereich des Reverse Engineering ermöglicht KI schließlich die Analyse von Binärdateien ohne vorliegenden Quellcode. LLMs können dekompilierten Code aus Werkzeugen wie Ghidra oder IDA Pro semantisch interpretieren und auf Speicherfehler, Use-after-free-Muster oder Integer-Overflows hinweisen -- ohne dass der Angreifer die Rohdekompilierung manuell auswerten muss. Die Kombination aus automatisierter Dekompilierung und KI-gestützter Interpretation senkt die Einstiegshürde für die Analyse proprietärer Software erheblich und macht bislang spezialisierten Fachkräften vorbehaltene Angriffsflächen einem breiteren Täterkreis zugänglich.
-
-\subsection{Physische Schwachstellenanalyse \& Exploit generierung}
-
-\section{OWASP-Jucieshop Code-analyse \label{cha:demo}} 
-
-\section{Fazit}
-Durch den einsatz von KI Hilfsmittelen von Angreifern ist es leichter Schwachstellen zu finden und diese auszunutzen. Gerade im Bereich Phishing und Socialengineering macht der gebrauch einer LLM vieles einfacher und schneller. Um eine gute qualität zu erhalten ist kein Top Modell erfoderlich, wie z.B. bei der Schwachstellenanalyse. Da Software immer sicherer wird und die meisten Angrife durch Phishing oder Socialengineering gestartet werden, senkt ein LLM diese Hürde noch weiter. Trotzdem ändert ein LLM nicht unbedingt den Ablauf sondern vereinfach nur Schritte, wie das übersetzen. Die Gefahr steigt für Privat Personen mehr and als für Firmen. Da im Privatenbereich nicht so viele Schutzmechanismen existieren wie im Enterprisebereich.
-
-Die interessanteren Angriffsvektoren sind die Schwachstellenanalyse von . 
-Unter betrachtung der Ergebnisse aus Kapitel \ref{cha:mythosvsoffentlich} und dem eigenem Versuch im Kapitel \ref{cha:demo}. Daraus kann abgeleitet werden das die Ergebnisse von Mythos eine bessere Qualität haben. Die Schwachstellen könnnen auch mit öffentlich zugänglichen Modellen gefunden und ausgenutzt werden, die Qualität und konsetenz ist nicht so sicher wie bei Mythos.
-
-
-
-
-
-
-
-\section*{Acknowledgment}
-
-
-The authors would like to thank...
-
-
-
-
-
+\input{chapters/01einleitung.tex}
+\input{chapters/02related_work.tex}
+\input{chapters/03mythos.tex}
+\input{chapters/04vergleich.tex}
+\input{chapters/05angriffsvektoren.tex}
+\input{chapters/06selbsttest.tex}
+\input{chapters/07fazit.tex}
 
 \bibliographystyle{bibtex/IEEEtran}
 \bibliography{bibtex/Quellen}

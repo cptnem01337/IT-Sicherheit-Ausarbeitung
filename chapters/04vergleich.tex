@@ -1,0 +1,76 @@
+\section{Öffentliche Modelle vs Mythos \label{cha:mythosvsoffentlich}} 
+Eine zentrale Frage für die Einordnung der Cyber-Risiken durch Claude Mythos ist, wie groß der tatsächliche Leistungsabstand zu öffentlich verfügbaren Modellen ist. Das britische AI Security Institute (AISI) hat hierzu eine vergleichende Evaluierung auf Basis von Capture-the-Flag-Aufgaben (CTFs) durchgeführt, die unterschiedliche Schwierigkeitsstufen offensiver Cyber-Aufgaben abdecken~\cite{aisi_claude_mythos_2026}.
+
+Abbildung~\ref{fig:ctf_nonexpert} zeigt die Erfolgsquoten auf CTFs im Niveau \emph{non-expert} und \emph{apprentice} seit November 2022. Während frühe Modelle nahezu keine Aufgaben lösten, erreichen aktuelle öffentliche Frontier-Modelle ein vergleichbares Niveau wie Mythos. Auf diesem Schwierigkeitsbereich ist der Vorsprung von Mythos im einstelligen Prozentpunktbereich; in einzelnen Konstellationen liegen öffentliche Modelle sogar gleichauf oder leicht darüber.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{ctf_nonexpert.png}
+\caption{Performance auf \emph{non-expert} und \emph{apprentice} CTF-Aufgaben für Modelle seit November 2022. Quelle: AISI~\cite{aisi_claude_mythos_2026}.}
+\label{fig:ctf_nonexpert}
+\end{figure}
+
+Auf den höheren Schwierigkeitsstufen \emph{practitioner} und \emph{expert} (Abbildung~\ref{fig:ctf_expert}) wird der Abstand sichtbarer, bleibt aber moderat: Mythos löst hier rund 73\,\% der Aufgaben, während die stärksten öffentlichen Modelle nur etwa 5\,Prozentpunkte darunter liegen und in einzelnen Kategorien ebenfalls auf gleichem Niveau abschneiden~\cite{aisi_claude_mythos_2026}.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{ctf_expert.png}
+\caption{Performance auf \emph{practitioner} und \emph{expert} CTF-Aufgaben für Modelle seit August 2025. Quelle: AISI~\cite{aisi_claude_mythos_2026}.}
+\label{fig:ctf_expert}
+\end{figure}
+
+Daraus ergibt sich eine Beobachtung: Mythos definiert zwar den aktuellen Stand der Technik im Bereich offensiver KI-Fähigkeiten, der Abstand zur breit verfügbaren Modellbasis ist jedoch klein. Schon ein Leistungsdelta von rund 5\,Prozentpunkten auf Expert-Level-CTFs bedeutet, dass die in den folgenden Abschnitten diskutierten Angriffsvektoren nicht auf Mythos beschränkt sind, sondern in abgeschwächter Form bereits mit öffentlich zugänglichen Modellen realisiert werden können.
+
+Diese Einschätzung wird durch eine unabhängige Reproduktionsstudie der Vidoc Security Labs gestützt~\cite{vidoc_mythos_reproduction_2026}. Vidoc hat die von Anthropic für Mythos berichteten Code-Schwachstellenfunde mit den öffentlich verfügbaren Modellen Claude Opus 4.6 und GPT-5.4 nachzustellen versucht und dabei in mehreren Kategorien identische Ergebnisse erzielt. Tabelle~\ref{tab:vidoc_repro} fasst die Befunde zusammen.
+
+\begin{table}[!htbp]
+\renewcommand{\arraystretch}{1.2}
+\caption{Reproduktion der Mythos-Schwachstellenfunde mit öffentlichen Modellen. Quelle: Vidoc Security~\cite{vidoc_mythos_reproduction_2026}.}
+\label{tab:vidoc_repro}
+\centering
+\footnotesize
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Ziel} & \textbf{Claude Opus 4.6} & \textbf{GPT-5.4} \\
+\hline
+FreeBSD (CVE-2026-4747) & exact (3/3) & exact (3/3) \\
+\hline
+OpenBSD (27-J.-Bug) & exact (3/3) & keine (0/3) \\
+\hline
+Botan (CVE-2026-34580/82) & exact (3/3) & exact (3/3) \\
+\hline
+FFmpeg (\texttt{h264\_slice.c}) & partial (3/3) & partial (3/3) \\
+\hline
+wolfSSL (CVE-2026-5194) & partial (3/3) & partial (3/3) \\
+\hline
+\end{tabular}
+\end{table}
+
+Vidoc berichtet, dass die Kosten für einen vollständigen Scan einer einzelnen Datei mit öffentlichen Modellen unter 30\,\$ blieben~\cite{vidoc_mythos_reproduction_2026}. Vor diesem Hintergrund ist auch die Preisstruktur der drei verglichenen Modelle aufschlussreich (Tabelle~\ref{tab:pricing}). Mythos ist je 1\,Mio.~Tokens deutlich teurer als die öffentlichen Alternativen.
+
+\begin{table}[!htbp]
+\renewcommand{\arraystretch}{1.2}
+\caption{API-Preise je 1\,Mio.~Tokens (Stand: Juni 2026).}
+\label{tab:pricing}
+\centering
+\footnotesize
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Modell} & \textbf{Input / 1M} & \textbf{Output / 1M} \\
+\hline
+GPT-5.4 & \$2{,}50 & \$15{,}00 \\
+\hline
+Claude Opus 4.6 & \$5{,}00 & \$25{,}00 \\
+\hline
+Claude Mythos & \$25{,}00 & \$125{,}00 \\
+\hline
+\end{tabular}
+% TODO: Quellen f\"ur Preise ergänzen (Anthropic-Preisseite, OpenAI-Preisseite)
+\end{table}
+
+Aus der Kombination der CTF-Benchmarks, der Vidoc-Reproduktion und der Preisstruktur ergibt sich das Fazit des Vergleichs:
+\begin{itemize}
+  \item Öffentliche Modelle erzielen vergleichbare Schwachstellenfunde wie Mythos zu Kosten unter 30\,\$ pro Datei~\cite{vidoc_mythos_reproduction_2026}.
+  \item Mythos ist in einzelnen Disziplinen weiterhin überlegen, stellt aber kein exklusives Werkzeug mehr dar, sondern markiert lediglich die obere Kante eines breit zugänglichen Spektrums.
+  \item Der verbleibende Vorteil von Mythos liegt weniger im reinen Modell, sondern im umgebenden Tooling -- Agenten-Schleifen, Code-Ausführung und integrierten Recherche-Werkzeugen.
+\end{itemize}
