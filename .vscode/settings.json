@@ -1,3 +1,20 @@
 {
-    "cSpell.language": "de-de"
+    "cSpell.language": "de-de",
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {
+                "PATH": "/Library/TeX/texbin:/usr/bin:/bin:${env:PATH}"
+            }
+        }
+        ]
 }
