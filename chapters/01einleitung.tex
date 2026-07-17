@@ -1,2 +1,49 @@
 \section{Einführung}
-Im April 2026 wurde das LLM-Modell \textit{Claude Mythos} von Anthropic angekündigt. Es soll fortgeschrittene Fähigkeiten im Cyberbereich aufweisen. 
+\label{sec:einführung}
+
+Die rasante Entwicklung großer Sprachmodelle (LLMs) hat in den vergangenen Jahren nicht nur die Möglichkeiten der
+Mensch-Computer-Interaktion grundlegend verändert, sondern wirft
+zunehmend auch sicherheitsrelevante Fragen auf. Während frühe
+Sprachmodelle primär als textverarbeitende Assistenzsysteme konzipiert
+wurden, zeigen aktuelle Modelle der neuesten Generation Fähigkeiten,
+die weit über diese ursprünglichen Capabilities hinausgehen -- darunter
+die autonome Analyse komplexer Softwaresysteme, das Auffinden bislang
+unbekannter Sicherheitslücken sowie die Entwicklung funktionsfähiger
+Exploits \cite{anthropic_mythos_preview}.
+
+Diese Entwicklung stellt die IT-Sicherheitsbranche vor eine grundlegende
+Herausforderung: KI-Systeme können heute sowohl als Werkzeug der
+Verteidigung als auch als Instrument des Angriffs eingesetzt werden.
+Die Grenze zwischen defensiver Sicherheitsforschung und offensivem
+Missbrauchspotenzial ist dabei fließend -- und wird mit wachsender
+Modellstärke zunehmend schwieriger zu ziehen.
+
+Mit der Veröffentlichung von \emph{Claude Mythos} durch Anthropic im
+April 2026 wurde diese Entwicklung auf eine neue Stufe gehoben
+\cite{anthropic_mythos_preview}. Erstmals steht ein Sprachmodell zur
+Verfügung, das den gesamten Prozess der Schwachstellenforschung --
+von der Erkennung über die Exploit-Entwicklung bis zur mehrstufigen
+Angriffskette -- ohne menschliches Eingreifen durchführen kann.
+Gleichzeitig demonstriert das Modell im Rahmen von \emph{Project Glasswing} sein defensives Potenzial, indem es kritische
+Sicherheitslücken in weit verbreiteter Open-Source-Software aufdeckt
+und zur Behebung meldet \cite{anthropic_glasswing}.
+
+Ziel dieser Ausarbeitung ist es, die aktuellen Entwicklungen im
+Bereich KI-gestützter Cyberangriffe strukturiert darzustellen und
+kritisch zu bewerten. Dabei werden sowohl die technischen Fähigkeiten
+moderner Sprachmodelle im Cyberbereich als auch die damit verbundenen
+Bedrohungsszenarien beleuchtet. Der Fokus liegt
+auf drei zentralen Themenbereichen: erstens den offensiven
+Cyberfähigkeiten von Claude Mythos und vergleichbaren Modellen,
+zweitens bekannten Angriffsvektoren wie Phishing, Schwachstellenanalyse
+und dem Angriff auf physische Systeme, und drittens der praktischen
+Demonstration anhand realer Angriffsszenarien.
+
+Die Ausarbeitung gliedert sich wie folgt: Kapitel~\ref{sec:claude-mythos}
+gibt einen Überblick über Claude Mythos, seine Fähigkeiten und die
+damit verbundenen Implikationen für die Cybersicherheit. Kapitel~\ref{cha:mythosvsoffentlich}
+stellt einen Vergleich zwischen Mythos und öffentlich verfügbaren
+Modellen an. Kapitel~\ref{sec:angriffsvektoren} beschreibt bekannte Angriffsvektoren, die
+durch den Einsatz von KI ermöglicht oder vereinfacht werden.
+Kapitel~\ref{cha:demo} präsentiert eine praktische Demonstration anhand des OWASP Juice Shops. Abschließend werden die Ergebnisse in Kapitel~\ref{sec:fazit}
+diskutiert und bewertet.
