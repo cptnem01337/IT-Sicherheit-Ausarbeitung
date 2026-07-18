@@ -1,7 +1,7 @@
-\section{Öffentliche Modelle vs Mythos \label{cha:mythosvsoffentlich}} 
+\section{Öffentliche Modelle vs Mythos \label{cha:mythosvsoffentlich}}
 Eine zentrale Frage für die Einordnung der Cyber-Risiken durch Claude Mythos ist, wie groß der tatsächliche Leistungsabstand zu öffentlich verfügbaren Modellen ist. Das britische AI Security Institute (AISI) hat hierzu eine vergleichende Evaluierung auf Basis von Capture-the-Flag-Aufgaben (CTFs) durchgeführt, die unterschiedliche Schwierigkeitsstufen offensiver Cyber-Aufgaben abdecken~\cite{aisi_claude_mythos_2026}.
 
-Abbildung~\ref{fig:ctf_nonexpert} zeigt die Erfolgsquoten auf CTFs im Niveau \emph{non-expert} und \emph{apprentice} seit November 2022. Während frühe Modelle nahezu keine Aufgaben lösten, erreichen aktuelle öffentliche Frontier-Modelle ein vergleichbares Niveau wie Mythos. Auf diesem Schwierigkeitsbereich ist der Vorsprung von Mythos im einstelligen Prozentpunktbereich; in einzelnen Konstellationen liegen öffentliche Modelle sogar gleichauf oder leicht darüber.
+Abbildung~\ref{fig:ctf_nonexpert} zeigt die Erfolgsquoten auf CTFs im Niveau \emph{non-expert} und \emph{apprentice} seit November 2022. Während frühe Modelle nahezu keine Aufgaben lösten, erreichen aktuelle öffentliche Frontier-Modelle ein vergleichbares Niveau wie Mythos. Auf diesem Schwierigkeitsbereich ist der Vorsprung von Mythos im einstelligen Prozentpunktbereich. In einzelnen Konstellationen liegen öffentliche Modelle sogar gleichauf oder leicht darüber.
 
 \begin{figure}[!htbp]
 \centering
@@ -10,7 +10,7 @@ Abbildung~\ref{fig:ctf_nonexpert} zeigt die Erfolgsquoten auf CTFs im Niveau \em
 \label{fig:ctf_nonexpert}
 \end{figure}
 
-Auf den höheren Schwierigkeitsstufen \emph{practitioner} und \emph{expert} (Abbildung~\ref{fig:ctf_expert}) wird der Abstand sichtbarer, bleibt aber moderat: Mythos löst hier rund 73\,\% der Aufgaben, während die stärksten öffentlichen Modelle nur etwa 5\,Prozentpunkte darunter liegen und in einzelnen Kategorien ebenfalls auf gleichem Niveau abschneiden~\cite{aisi_claude_mythos_2026}.
+Auf den höheren Schwierigkeitsstufen \emph{practitioner} und \emph{expert} (Abbildung~\ref{fig:ctf_expert}) wird der Abstand sichtbarer, bleibt aber moderat. Mythos löst hier rund 73\,\% der Aufgaben, während die stärksten öffentlichen Modelle nur etwa 5\,Prozentpunkte darunter liegen und in einzelnen Kategorien ebenfalls auf gleichem Niveau abschneiden~\cite{aisi_claude_mythos_2026}.
 
 \begin{figure}[!htbp]
 \centering
@@ -19,7 +19,7 @@ Auf den höheren Schwierigkeitsstufen \emph{practitioner} und \emph{expert} (Abb
 \label{fig:ctf_expert}
 \end{figure}
 
-Daraus ergibt sich eine Beobachtung: Mythos definiert zwar den aktuellen Stand der Technik im Bereich offensiver KI-Fähigkeiten, der Abstand zur breit verfügbaren Modellbasis ist jedoch klein. Schon ein Leistungsdelta von rund 5\,Prozentpunkten auf Expert-Level-CTFs bedeutet, dass die in den folgenden Abschnitten diskutierten Angriffsvektoren nicht auf Mythos beschränkt sind, sondern in abgeschwächter Form bereits mit öffentlich zugänglichen Modellen realisiert werden können.
+Diese Ergebnisse zeigen, dass Mythos zwar den aktuellen Stand der Technik im Bereich offensiver KI-Fähigkeiten definiert, der Abstand zur breit verfügbaren Modellbasis jedoch klein ist. Schon ein Leistungsdelta von rund 5\,Prozentpunkten auf Expert-Level-CTFs bedeutet, dass die folgenden Angriffsvektoren nicht auf Mythos beschränkt sind, sondern in abgeschwächter Form bereits mit öffentlich zugänglichen Modellen realisiert werden können.
 
 Diese Einschätzung wird durch eine unabhängige Reproduktionsstudie der Vidoc Security Labs gestützt~\cite{vidoc_mythos_reproduction_2026}. Vidoc hat die von Anthropic für Mythos berichteten Code-Schwachstellenfunde mit den öffentlich verfügbaren Modellen Claude Opus 4.6 und GPT-5.4 nachzustellen versucht und dabei in mehreren Kategorien identische Ergebnisse erzielt. Tabelle~\ref{tab:vidoc_repro} fasst die Befunde zusammen.
 
@@ -68,9 +68,4 @@ Claude Mythos & \$25{,}00 & \$125{,}00 \\
 % TODO: Quellen f\"ur Preise ergänzen (Anthropic-Preisseite, OpenAI-Preisseite)
 \end{table}
 
-Aus der Kombination der CTF-Benchmarks, der Vidoc-Reproduktion und der Preisstruktur ergibt sich das Fazit des Vergleichs:
-\begin{itemize}
-  \item Öffentliche Modelle erzielen vergleichbare Schwachstellenfunde wie Mythos zu Kosten unter 30\,\$ pro Datei~\cite{vidoc_mythos_reproduction_2026}.
-  \item Mythos ist in einzelnen Disziplinen weiterhin überlegen, stellt aber kein exklusives Werkzeug mehr dar, sondern markiert lediglich die obere Kante eines breit zugänglichen Spektrums.
-  \item Der verbleibende Vorteil von Mythos liegt weniger im reinen Modell, sondern im umgebenden Tooling -- Agenten-Schleifen, Code-Ausführung und integrierten Recherche-Werkzeugen.
-\end{itemize}
+Da öffentliche Modelle nahezu gleichwertige Fähigkeiten zu einem Bruchteil der Kosten besitzen, sind die im folgenden Kapitel beschriebenen Angriffsvektoren nicht auf Nutzer mit Zugang zu Mythos beschränkt, sondern einem breiten Täterkreis zugänglich.

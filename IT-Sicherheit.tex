@@ -26,6 +26,7 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
+\usepackage{url}
 
 \begin{document}
 
@@ -43,7 +44,11 @@
 \pagestyle{plain}
 
 \begin{abstract}
-Diese Ausarbeitung zeigt den Stand der Technik von K.I. im Cyber Sicherheitsbereich für Angreifer. Dazu wird auf die drei Angriffsvektoren: Phishing \& Socialengineering, Code Schwachstellenanalyse \& Exploit generierung, Physische Schwachstellenanalyse \& Exploit generierung eingegnagen. Im Vergleich Mythos vs öffentliche Modelle wird klar das es kein exklusiv Werkzeug ist.
+Generative KI-Modelle entwickeln offensive Cyberfähigkeiten als Nebenprodukt allgemeiner Verbesserungen in den Bereichen Code, Reasoning und Autonomie. Mit Claude Mythos steht erstmals ein Modell zur Verfügung, das den gesamten Prozess der Schwachstellenforschung ohne menschliches Eingreifen durchführen kann. Diese Ausarbeitung untersucht, welche Bedrohung davon ausgeht und inwiefern vergleichbare Fähigkeiten bereits mit öffentlich zugänglichen Modellen erreichbar sind.
+
+Dazu werden drei Angriffsvektoren analysiert: Phishing und Social Engineering, Code-Schwachstellenanalyse und Exploit-Generierung sowie physische Schwachstellenanalyse. Ergänzend wird ein praktischer Selbstversuch am OWASP Juice Shop durchgeführt. Der Vergleich zwischen Mythos und öffentlichen Modellen stützt sich auf CTF-Benchmarks des britischen AI Security Institute sowie eine unabhängige Reproduktionsstudie von Vidoc Security Labs.
+
+Die Ergebnisse zeigen, dass öffentliche Modelle Mythos-Schwachstellenfunde in mehreren Kategorien vollständig reproduzieren konnten, zu Kosten von unter 30 Dollar pro Datei. Der Leistungsabstand auf Expert-Niveau beträgt lediglich etwa fünf Prozentpunkte. KI senkt die Einstiegshürde für alle untersuchten Angriffsvektoren erheblich, ohne den grundlegenden Angriffsablauf zu verändern. Claude Mythos markiert die obere Kante eines breiten Spektrums, stellt aber kein exklusives Werkzeug dar. Dieselben Fähigkeiten stehen symmetrisch auch der Verteidigungsseite zur Verfügung.
 \end{abstract}
 
 % \input{chapters/chapter1}
