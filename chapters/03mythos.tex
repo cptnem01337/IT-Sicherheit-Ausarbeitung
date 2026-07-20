@@ -31,13 +31,27 @@ Lage, derartige Exploit-Ketten eigenständig zu schließen
 
 Ein weiterer sicherheitsrelevanter Aspekt liegt in der Zugänglichkeit
 des Modells: Da Mythos keine Vorerfahrung im Bereich der Penetrationstests
-oder der Exploit-Entwicklung voraussetzt, können auch technisch nicht
-versierte Nutzerinnen und Nutzer komplexe Angriffe initiieren
+oder der Exploit-Entwicklung voraussetzt, können auch technisch unerfahrene Nutzerinnen und Nutzer komplexe Angriffe initiieren
 \cite{anthropic_mythos_preview, aisi_claude_mythos_2026}. Dies senkt die
 Einstiegshürde für offensive Cyberaktivitäten erheblich und stellt
-eine qualitativ neue Bedrohungsdimension dar.
+eine neue Bedrohungsdimension dar. Dabei muss allerdings beachtet werden, dass diese Informationen von Anthropic selbst stammen und nicht unabhängig bestätigt wurden. 
 
-Hervorzuheben ist, dass Mythos nicht explizit auf diese offensiven
+Unabhängige Benchmarks bestätigen diese Einschätzung mit messbaren
+Ergebnissen. Der \emph{ExploitBench}-Benchmark der Carnegie Mellon
+University misst nicht lediglich, ob ein Modell eine Schwachstelle
+reproduzieren kann, sondern bewertet die vollständige
+Exploit-Entwicklungskette in fünf Stufen -- vom Erreichen des
+verwundbaren Codes über die Erzeugung von Exploit-Primitiven bis hin
+zur vollständigen Kontrolle über das Zielsystem (\emph{Arbitrary Code Execution}, ACE). Der aktuelle Benchmark \emph{v8-bench} zielt auf
+V8 ab, die JavaScript- und WebAssembly-Engine in Chrome, Edge,
+Node.js und Cloudflare Workers, und wertet Läufe gegen eine
+produktive V8-Instanz mit aktivierter Sicherheitssandbox aus.
+Claude Mythos Preview belegt mit einer Capability-Coverage von
+74~\% den ersten Platz des Leaderboards und ist damit eines von nur
+zwei Modellen -- neben GPT-5.5 -- das die vollständige Exploit-Kette
+bis zur Codeausführung auf produktivem V8 erreichen konnte \cite{exploitbench2026}.
+
+Hervorzuheben ist, dass Mythos - laut Anthropic - nicht explizit auf diese offensiven
 Cyberfähigkeiten trainiert wurde; sie resultieren vielmehr als Nebenprodukt allgemeiner Verbesserungen in den Bereichen Code, Reasoning
 und Autonomie \cite{anthropic_mythos_preview}. Dieselben Fähigkeiten, die das
 Modell beim Schließen von Sicherheitslücken wirksamer machen, steigern
@@ -137,3 +151,16 @@ die Breite des Fähigkeitsgewinns, den Aufwand zur Weaponisierung sowie
 die Auffindbarkeit der Technik \cite{anthropic_redeploying_fable5}.
 Ziel ist es, neue Jailbreak-Funde künftig einheitlich bewerten und
 behördliche Reaktionen daran ausrichten zu können.
+
+Insgesamt zeigt die Entwicklung rund um Claude Mythos, dass KI-Modelle
+im Cyberbereich eine qualitativ neue Stufe erreicht haben. Die Fähigkeit
+zur vollständig autonomen Durchführung komplexer Angriffsketten, die
+Nutzbarkeit durch technisch nicht versierte Personen sowie die Tatsache, dass die offensiven Fähigkeiten nicht gezielt trainiert
+wurden, sondern als unbeabsichtigtes Nebenprodukt des allgemeinen
+Trainingsprozesses entstanden, stellen bisherige Sicherheitskonzepte
+grundlegend in Frage. Gleichzeitig verdeutlichen Project Glasswing und
+die koordinierte Schwachstellenoffenlegung (CVD), dass dieselben Fähigkeiten
+erhebliches defensives Potenzial besitzen. Die kurzfristige Sperrung
+von Fable~5 macht deutlich, dass der regulatorische Umgang mit solchen
+Modellen noch am Anfang steht und sowohl technische als auch rechtliche
+Rahmenbedingungen dringend weiterentwickelt werden müssen.
